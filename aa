@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products - Eco-Friendly Finder</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="styles.css" rel="stylesheet" />
+  <style>
+    .filter-bar {
+      margin-bottom: 30px;
+    }
+
+    .product-card {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.5s, transform 0.5s ease-in-out;
+      display: block;
+    }
+
+    .product-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast-container {
+      z-index: 1055;
+    }
+
+    .modal-dialog {
+      max-width: 400px;
+    }
+
+    .view-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .product-card {
+      display: block;
+    }
+
+    .modal-body form {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .modal-body form input,
+    .modal-body form button {
+      width: 100%;
+    }
+
+    /* Custom Style for Enlarged Image */
+    .product-image-modal img {
+      width: 100%;
+      height: auto;
+    }
+
+    /* Custom Styling for Product Details */
+    .product-details-modal .modal-body {
+      font-size: 18px;
+      padding: 20px;
+    }
+
+    .product-details-modal img {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+      <nav class="navbar navbar-expand-lg fixed-top navbar-dark" style="background-color: #28a745;">
+            <div class="container">
+              <a class="navbar-brand" href="index.html">Eco-Friendly Finder</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                  <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                  <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
+                  <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                  <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                  <li class="nav-item"><a class="nav-link" href="buy.html">Buy</a></li>
+                  <li class="nav-item">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="cart.html">
+              Cart (<span id="cart-count">0</span>)
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="products py-5 mt-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Eco-Friendly Products</h2>
+      <div class="row">
+        <!-- Product Cards with "Add to Cart" buttons -->
+        <div class="col-md-4 mb-4 product-card" data-category="hygiene">
+          <div class="card">
+            <img src="shampoo.jpg" class="card-img-top product-image" alt="Eco-Friendly Shampoo Bar" onclick="showProductDetails('Eco-Friendly Shampoo Bar', 'shampoo.jpg', 'A zero-waste shampoo bar that’s gentle on your hair and the environment.', 'Nu 8.99')">
+            <div class="card-body">
+              <h5 class="card-title" onclick="showProductDetails('Eco-Friendly Shampoo Bar', 'shampoo.jpg', 'A zero-waste shampoo bar that’s gentle on your hair and the environment.', 'Nu 8.99')">Eco-Friendly Shampoo Bar</h5>
+              <p class="card-text">A zero-waste shampoo bar that’s gentle on your hair and the environment.</p>
+              <p class="card-text"><strong>Nu 8.99</strong></p>
+              <button class="btn btn-success" onclick="addToCart('Eco-Friendly Shampoo Bar', 'shampoo.jpg', 'A zero-waste shampoo bar that’s gentle on your hair and the environment.', 'Nu 8.99')">Add to Cart</button>
+              <button class="view-btn" onclick="showLoginModal()">Buy Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Repeat above structure for other products as needed -->
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart Toast Notification -->
+  <div class="toast" id="cartToast" data-bs-delay="3000">
+    <div class="toast-body">
+      Item added to cart!
+    </div>
+  </div>
+
+  <!-- Footer and modal code remains unchanged -->
+
+  <script>
+    const cartKey = 'ecoCart';
+
+    // Function to load and display the cart count
+    function loadCartCount() {
+      const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+      document.getElementById('cart-count').textContent = cart.length;
+    }
+
+    // Function to display a toast notification
+    function showToast(message) {
+      const toastElement = document.getElementById('cartToast');
+      const toast = new bootstrap.Toast(toastElement);
+      toast.show();
+    }
+
+    // Modified addToCart function to include image, name, and description of the product
+    function addToCart(productName, productImage, productDescription, productPrice) {
+      const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+      const product = {
+        name: productName,
+        image: productImage,
+        description: productDescription,
+        price: productPrice,
+      };
+
+      // Only add the product if it's not already in the cart
+      if (!cart.some(item => item.name === productName)) {
+        cart.push(product);
+        localStorage.setItem(cartKey, JSON.stringify(cart));
+        loadCartCount();
+        showToast('Item added to cart.');
+      } else {
+        showToast('This item is already in your cart.');
+      }
+    }
+
+    loadCartCount();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

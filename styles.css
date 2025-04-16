@@ -1,0 +1,346 @@
+/* General body styling */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar styling */
+.navbar {
+  background-color: #28a745; /* Eco-friendly green */
+  border-bottom: 2px solid #ddd;
+}
+
+.navbar .navbar-brand {
+  color: #fff !important;
+  font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+  color: #fff !important;
+  font-size: 1.1rem;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #f1faee !important;
+}
+
+/* Product Card Customizations */
+.card {
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-img-top {
+  height: 250px;
+  object-fit: cover;
+}
+
+.card-body {
+  background-color: #f1f1f1;
+}
+
+.card-title {
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 1rem;
+}
+
+.btn-success {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+/* Footer styling */
+footer {
+  background-color: #28a745; /* Green footer */
+  color: #fff;
+  padding: 20px 0;
+  font-size: 1rem;
+}
+
+footer p {
+  margin: 0;
+}
+
+/* About Us Section */
+.about-us {
+  background-color: #ffffff;
+  padding: 50px 0;
+}
+
+.about-us h2 {
+  font-size: 2.5rem;
+  color: #2d6a4f;
+  margin-bottom: 20px;
+}
+
+.about-us .lead {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.about-us .row {
+  margin-top: 40px;
+}
+
+.about-us h3 {
+  font-size: 1.8rem;
+  color: #2d6a4f;
+  margin-bottom: 15px;
+}
+
+.about-us p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .about-us h2 {
+    font-size: 2rem;
+  }
+
+  .about-us h3 {
+    font-size: 1.5rem;
+  }
+
+  .about-us p {
+    font-size: 1rem;
+  }
+}
+
+/* CEO, Co-CEO, Partners, and Workers Section */
+.team {
+  background-color: #f8f9fa;
+}
+
+.team .col-md-4 {
+  margin-bottom: 30px;
+}
+
+.team img {
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.team .col-md-4 h4 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.team .col-md-4 p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Team Member Images */
+.team .col-md-4 img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Smaller worker images */
+.team .col-md-4 img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+/* Upcoming Projects Section */
+.project-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+}
+
+.project-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.project-card h4 {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.project-card p {
+  font-size: 1rem;
+  color: #555;
+}
+/* Add padding to the top of the body to account for the fixed navbar */
+body {
+  padding-top: 80px;
+}
+
+/* Improve typography */
+h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2d6a4f;
+}
+
+h3 {
+  font-size: 1.8rem;
+  color: #2d6a4f;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #495057;
+}
+
+footer {
+  background-color: #2d6a4f;
+}
+
+/* Custom styles for the contact form */
+body {
+  background-color: #f9f9f9;
+  font-family: 'Arial', sans-serif;
+}
+
+.navbar {
+  background-color: #4CAF50;
+}
+
+.navbar-brand, .navbar-nav .nav-link {
+  color: white !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #FFD700 !important;
+}
+
+.contact {
+  background: linear-gradient(to right, #fff, #e0f7fa);
+  padding: 60px 0;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contact h2 {
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.form-control {
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+  font-weight: 500;
+  color: #333;
+}
+
+.btn-primary {
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: 500;
+}
+
+.btn-primary:hover {
+  background-color: #45a049;
+}
+
+.alert {
+  border-radius: 10px;
+  display: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+  background-color: #4CAF50;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  margin-top: 40px;
+  border-radius: 15px 15px 0 0;
+}
+
+.footer-text {
+  color: #fff;
+  font-size: 14px;
+}
+:root {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --accent-color: #4CAF50;
+}
+
+[data-theme="dark"] {
+  --background-color: #121212;
+  --text-color: #ffffff;
+  --accent-color: #81C784;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+.social-icon {
+  width: 40px;  /* Adjust size to a reasonable value */
+  height: 40px;  /* Maintain square aspect ratio */
+  border-radius: 50%;  /* Make the icons circular */
+  object-fit: cover;  /* Ensures the image scales without distortion */
+  transition: transform 0.2s ease;  /* Optional: Add hover effect */
+}
+
+.social-icon:hover {
+  transform: scale(1.1);  /* Optional: Slightly enlarge on hover */
+}
+nav {
+  background-color: #333;
+  padding: 10px 0;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+nav ul li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 5px 10px;
+  display: inline-block;
+  position: relative;
+}
+
+nav a.active {
+  border-bottom: 4px solid green; /* Underline with thick green color */
+}

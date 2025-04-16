@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Eco-Friendly Product Finder - Discover sustainable and green alternatives for a better future.">
+    <meta name="keywords" content="eco-friendly, products, sustainability, green products, eco-friendly alternatives">
+    <meta name="author" content="Eco-Friendly Finder Team">
+    <title>Eco-Friendly Product Finder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="manifest" href="manifest.json">
+
+    <style>
+        /* Make the footer always stick to the bottom of the page */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            flex-grow: 1; /* Pushes the footer to the bottom */
+        }
+
+        .contact {
+            padding: 60px 0;
+        }
+
+        /* Center the form and adjust input fields size */
+        #contactForm {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-control {
+            height: 40px; /* Medium-sized input fields */
+            font-size: 16px;
+        }
+
+        .form-label {
+            font-size: 16px; /* Adjust label size */
+        }
+
+        /* Add padding and margin for inputs */
+        .form-control, .form-label {
+            margin-bottom: 20px;
+        }
+
+        /* Center the footer content */
+        footer {
+            background-color: #343a40;
+            color: white;
+        }
+
+        footer .social-icon {
+            width: 30px;
+            height: 30px;
+        }
+
+        footer .d-flex a {
+            transition: transform 0.2s ease-in-out;
+        }
+
+        footer .d-flex a:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('Service Worker registered with scope:', reg.scope))
+                .catch(err => console.error('Service Worker registration failed:', err));
+        });
+    }
+</script>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Eco-Friendly Finder</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="cart.html">
+                          Cart
+                          <span class="badge bg-warning text-dark position-absolute top-0 start-100 translate-middle" id="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content Section -->
+    <div class="content">
+        <!-- Contact Section -->
+        <section class="contact">
+            <div class="container">
+                <h2 class="text-center mb-4">Get in Touch</h2>
+                <!-- Contact Form -->
+                <form id="contactForm" action="submit_form.php" method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Your Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required placeholder="example@gmail.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Your Message</label>
+                        <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                </form>
+                <div id="successMessage" class="alert alert-success mt-3" style="display:none;">
+                    Your message has been sent successfully!
+                </div>
+                <div id="errorMessage" class="alert alert-danger mt-3" style="display:none;">
+                    Something went wrong, please try again.
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4">
+        <p>&copy; 2025 Eco-Friendly Finder. All rights reserved.</p>
+        <div class="d-flex justify-content-center align-items-center mt-2 gap-3">
+            <a href="https://www.facebook.com/tiger.tashi/" target="_blank" rel="noopener noreferrer">
+                <img src="facebook.png" alt="Facebook" class="social-icon">
+            </a>
+            <a href="https://x.com/DORJITA406" target="_blank" rel="noopener noreferrer">
+                <img src="twitter.png" alt="Twitter" class="social-icon">
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer">
+                <img src="instagram.png" alt="Instagram" class="social-icon">
+            </a>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+        // Handle form submission using AJAX
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            // Get email value and validate format
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            // Validate email format
+            if (!emailRegex.test(email)) {
+                document.getElementById('errorMessage').innerText = "Please enter a valid email address.";
+                document.getElementById('errorMessage').style.display = 'block';
+                return;
+            }
+
+            // Create a FormData object to collect form data
+            const formData = new FormData(this);
+
+            // Send data using AJAX (fetch)
+            fetch('submit_form.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data === 'success') {
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('errorMessage').style.display = 'none';
+                    document.getElementById('contactForm').reset();
+                } else {
+                    document.getElementById('errorMessage').style.display = 'block';
+                    document.getElementById('successMessage').style.display = 'none';
+                }
+            })
+            .catch(error => {
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
+            });
+        });
+    </script>
+    <!-- JavaScript to add the 'active' class to the current page -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const currentPath = window.location.pathname;
+
+            navLinks.forEach(link => {
+                if (currentPath.includes(link.getAttribute('href'))) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

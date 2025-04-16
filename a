@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Eco-Friendly Finder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet" />
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('Service Worker registered with scope:', reg.scope))
+          .catch(err => console.error('Service Worker registration failed:', err));
+      });
+    }
+</script>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Eco-Friendly Finder</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="cart.html">
+                          Cart
+                          <span class="badge bg-warning text-dark position-absolute top-0 start-100 translate-middle" id="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Section -->
+    <section class="contact py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Get in Touch</h2>
+            <!-- Contact Form -->
+            <form id="contactForm" action="submit_form.php" method="POST">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Your Name</label>
+                    <input type="text" class="form-control" id="name" name="name">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Your Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required placeholder="example@gmail.com">
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Your Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Send Message</button>
+            </form>
+            <div id="successMessage" class="alert alert-success mt-3" style="display:none;">
+                Your message has been sent successfully!
+            </div>
+            <div id="errorMessage" class="alert alert-danger mt-3" style="display:none;">
+                Something went wrong, please try again.
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4">
+        <p>&copy; 2025 Eco-Friendly Finder. All rights reserved.</p>
+        <div class="d-flex justify-content-center align-items-center mt-2 gap-3">
+          <a href="https://www.facebook.com/tiger.tashi/" target="_blank" rel="noopener noreferrer">
+            <img src="facebook.png" alt="Facebook" class="social-icon">
+          </a>
+          <a href="https://x.com/DORJITA406" target="_blank" rel="noopener noreferrer">
+            <img src="twitter.png" alt="Twitter" class="social-icon">
+          </a>
+          <a href="#" target="_blank" rel="noopener noreferrer">
+            <img src="instagram.png" alt="Instagram" class="social-icon">
+          </a>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+        // Handle form submission using AJAX
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            // Create a FormData object to collect form data
+            const formData = new FormData(this);
+
+            // Send data using AJAX (fetch)
+            fetch('submit_form.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data === 'success') {
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('errorMessage').style.display = 'none';
+                    document.getElementById('contactForm').reset();
+                } else {
+                    document.getElementById('errorMessage').style.display = 'block';
+                    document.getElementById('successMessage').style.display = 'none';
+                }
+            })
+            .catch(error => {
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
+            });
+        });
+    </script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+function showLoginModal() {
+    const modalBody = document.querySelector('#loginModal .modal-body');
+    modalBody.innerHTML = `
+      <h4>Login or Sign Up</h4>
+      <form id="loginForm">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username or Email</label>
+          <input type="text" class="form-control" id="username" required />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="button" class="btn btn-secondary mt-2" id="toggleSignup">Sign Up</button>
+      </form>
+    `;
+
+    // Toggle between Login and Sign Up form
+    const toggleButton = document.getElementById('toggleSignup');
+    toggleButton.addEventListener('click', () => {
+      const form = document.getElementById('loginForm');
+      if (toggleButton.textContent === 'Sign Up') {
+        toggleButton.textContent = 'Login';
+        form.querySelector('button').textContent = 'Sign Up';
+      } else {
+        toggleButton.textContent = 'Sign Up';
+        form.querySelector('button').textContent = 'Login';
+      }
+    });
+
+    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+    loginModal.show();
+  }

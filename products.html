@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products - Eco-Friendly Finder</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="styles.css" rel="stylesheet" />
+  <style>
+    .filter-bar {
+      margin-bottom: 30px;
+    }
+
+    .product-card {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.5s, transform 0.5s ease-in-out;
+      display: block;
+    }
+
+    .product-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast-container {
+      z-index: 1055;
+    }
+
+    .modal-dialog {
+      max-width: 400px;
+    }
+
+    .view-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .product-card {
+      display: block;
+    }
+
+    .modal-body form {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .modal-body form input,
+    .modal-body form button {
+      width: 100%;
+    }
+
+    /* Custom Style for Enlarged Image */
+    .product-image-modal img {
+      width: 100%;
+      height: auto;
+    }
+
+    /* Custom Styling for Product Details */
+    .product-details-modal .modal-body {
+      font-size: 18px;
+      padding: 20px;
+    }
+
+    .product-details-modal img {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark" style="background-color: #28a745;">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Eco-Friendly Finder</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+          <li class="nav-item">
+            <a class="nav-link position-relative" href="cart.html">
+              Cart
+              <span class="badge bg-warning text-dark position-absolute top-0 start-100 translate-middle" id="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="products py-5 mt-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Eco-Friendly Products</h2>
+
+      <div class="filter-bar row mb-4">
+        <div class="col-md-6 mb-2">
+          <input type="text" id="searchInput" class="form-control" placeholder="Search for a product...">
+        </div>
+        <div class="col-md-6 mb-2">
+          <select id="categoryFilter" class="form-select">
+            <option value="">All Categories</option>
+            <option value="hygiene">Hygiene</option>
+            <option value="accessories">Accessories</option>
+            <option value="household">Household</option>
+            <option value="technology">Technology</option>
+            <option value="stationery">Stationery</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row" id="productList">
+        <!-- Product Cards -->
+
+
+        <div class="col-md-4 mb-4 product-card" data-category="hygiene">
+          <div class="card">
+            <img src="shampoo.jpg" class="card-img-top product-image" alt="Eco-Friendly Shampoo Bar" onclick="showProductDetails('Eco-Friendly Shampoo Bar', 'shampoo.jpg', 'A zero-waste shampoo bar that’s gentle on your hair and the environment.', 'Nu 8.99')">
+            <div class="card-body">
+              <h5 class="card-title" onclick="showProductDetails('Eco-Friendly Shampoo Bar', 'shampoo.jpg', 'A zero-waste shampoo bar that’s gentle on your hair and the environment.', 'Nu 8.99')">Eco-Friendly Shampoo Bar</h5>
+              <p class="card-text">A zero-waste shampoo bar that’s gentle on your hair and the environment.</p>
+              <p class="card-text"><strong>Nu 8.99</strong></p>
+              <button class="btn btn-success" onclick="addToCart('Eco-Friendly Shampoo Bar')">Add to Cart</button>
+              <button class="view-btn" onclick="showLoginModal()">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4 mb-4 product-card" data-category="accessories">
+          <div class="card">
+            <img src="rebag.png" class="card-img-top product-image" alt="Reusable Shopping Bag" onclick="showProductDetails('Reusable Shopping Bag', 'rebag.png', 'A sturdy, foldable bag perfect for groceries or shopping trips.', 'Nu 12.99')">
+            <div class="card-body">
+              <h5 class="card-title" onclick="showProductDetails('Reusable Shopping Bag', 'rebag.png', 'A sturdy, foldable bag perfect for groceries or shopping trips.', 'Nu 12.99')">Reusable Shopping Bag</h5>
+              <p class="card-text">A sturdy, foldable bag perfect for groceries or shopping trips.</p>
+              <p class="card-text"><strong>Nu 12.99</strong></p>
+              <button class="btn btn-success" onclick="addToCart('Reusable Shopping Bag')">Add to Cart</button>
+              <button class="view-btn" onclick="showLoginModal()">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4 mb-4 product-card" data-category="hygiene">
+          <div class="card">
+            <img src="bam.jpg" class="card-img-top product-image" alt="Bamboo Toothbrush" onclick="showProductDetails('Bamboo Toothbrush', 'bam.jpg', 'An eco-friendly alternative to plastic toothbrushes, made from sustainable bamboo.', 'Nu 4.99')">
+            <div class="card-body">
+              <h5 class="card-title" onclick="showProductDetails('Bamboo Toothbrush', 'bam.jpg', 'An eco-friendly alternative to plastic toothbrushes, made from sustainable bamboo.', 'Nu 4.99')">Bamboo Toothbrush</h5>
+              <p class="card-text">An eco-friendly alternative to plastic toothbrushes, made from sustainable bamboo.</p>
+              <p class="card-text"><strong>Nu 4.99</strong></p>
+              <button class="btn btn-success" onclick="addToCart('Bamboo Toothbrush')">Add to Cart</button>
+              <button class="view-btn" onclick="showLoginModal()">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4 mb-4 product-card" data-category="accessories">
+          <div class="card">
+            <img src="water.png" class="card-img-top product-image" alt="Reusable Water Bottle" onclick="showProductDetails('Reusable Water Bottle', 'water.png', 'Stay hydrated with this stainless steel reusable water bottle, perfect for reducing plastic waste.', 'Nu 12.99')">
+            <div class="card-body">
+              <h5 class="card-title" onclick="showProductDetails('Reusable Water Bottle', 'water.png', 'Stay hydrated with this stainless steel reusable water bottle, perfect for reducing plastic waste.', 'Nu 12.99')">Reusable Water Bottle</h5>
+              <p class="card-text">Stay hydrated with this stainless steel reusable water bottle, perfect for reducing plastic waste.</p>
+              <p class="card-text"><strong>Nu 12.99</strong></p>
+              <button class="btn btn-success" onclick="addToCart('Reusable Water Bottle')">Add to Cart</button>
+              <button class="view-btn" onclick="showLoginModal()">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4 mb-4 product-card" data-category="household">
+          <div class="card">
+            <img src="bag.jpg" class="card-img-top product-image" alt="Organic Cotton Tote Bag" onclick="showProductDetails('Organic Cotton Tote Bag', 'bag.jpg', 'A stylish, durable tote bag made from organic cotton to reduce single-use plastic bags.', 'Nu 7.99')">
+            <div class="card-body">
+              <h5 class="card-title" onclick="showProductDetails('Organic Cotton Tote Bag', 'bag.jpg', 'A stylish, durable tote bag made from organic cotton to reduce single-use plastic bags.', 'Nu 7.99')">Organic Cotton Tote Bag</h5>
+              <p class="card-text">A stylish, durable tote bag made from organic cotton to reduce single-use plastic bags.</p>
+              <p class="card-text"><strong>Nu 7.99</strong></p>
+              <button class="btn btn-success" onclick="addToCart('Organic Cotton Tote Bag')">Add to Cart</button>
+              <button class="view-btn" onclick="showLoginModal()">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4 mb-4 product-card" data-category="technology">
+          <div class="card">
+            <img src="coffee.jpg" class="card-img-top product-image" alt="Reusable Coffee Cup" onclick="showProductDetails('Reusable Coffee Cup', 'coffee.jpg', 'Take your coffee on the go with this reusable coffee cup, reducing waste from disposable cups.', 'Nu 10.99')">
+            <div class="card-body">
+              <h5 class="card-title" onclick="showProductDetails('Reusable Coffee Cup', 'coffee.jpg', 'Take your coffee on the go with this reusable coffee cup, reducing waste from disposable cups.', 'Nu 10.99')">Reusable Coffee Cup</h5>
+              <p class="card-text">Take your coffee on the go with this reusable coffee cup, reducing waste from disposable cups.</p>
+              <p class="card-text"><strong>Nu 10.99</strong></p>
+              <button class="btn btn-success" onclick="addToCart('Reusable Coffee Cup')">Add to Cart</button>
+              <button class="view-btn" onclick="showLoginModal()">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4 mb-4 product-card" data-category="accessories">
+          <div class="card">
+            <img src="solar.jpg" class="card-img-top product-image" alt="Solar Powered Lantern" onclick="showProductDetails('Solar Powered Lantern', 'solar.jpg', 'A solar-powered lantern, perfect for outdoor adventures without the need for disposable batteries.', 'Nu 18.99')">
+            <div class="card-body">
+              <h5 class="card-title" onclick="showProductDetails('Solar Powered Lantern', 'solar.jpg', 'A solar-powered lantern, perfect for outdoor adventures without the need for disposable batteries.', 'Nu 18.99')">Solar Powered Lantern</h5>
+              <p class="card-text">A solar-powered lantern, perfect for outdoor adventures without the need for disposable batteries.</p>
+              <p class="card-text"><strong>Nu 18.99</strong></p>
+              <button class="btn btn-success" onclick="addToCart('Solar Powered Lantern')">Add to Cart</button>
+              <button class="view-btn" onclick="showLoginModal()">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4 mb-4 product-card" data-category="household">
+          <div class="card">
+            <img src="trash.jpg" class="card-img-top product-image" alt="Compostable Trash Bags" onclick="showProductDetails('Compostable Trash Bags', 'trash.jpg', 'These compostable trash bags break down quickly, helping reduce landfill waste.', 'Nu 11.99')">
+            <div class="card-body">
+              <h5 class="card-title" onclick="showProductDetails('Compostable Trash Bags', 'trash.jpg', 'These compostable trash bags break down quickly, helping reduce landfill waste.', 'Nu 11.99')">Compostable Trash Bags</h5>
+              <p class="card-text">These compostable trash bags break down quickly, helping reduce landfill waste.</p>
+              <p class="card-text"><strong>Nu 11.99</strong></p>
+              <button class="btn btn-success" onclick="addToCart('Compostable Trash Bags')">Add to Cart</button>
+              <button class="view-btn" onclick="showLoginModal()">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4 mb-4 product-card" data-category="stationery">
+          <div class="card">
+            <img src="note.jpg" class="card-img-top product-image" alt="Recycled Paper Notebook" onclick="showProductDetails('Recycled Paper Notebook', 'note.jpg', 'A notebook made from 100% recycled paper, helping reduce waste.', 'Nu 3.99')">
+            <div class="card-body">
+              <h5 class="card-title" onclick="showProductDetails('Recycled Paper Notebook', 'note.jpg', 'A notebook made from 100% recycled paper, helping reduce waste.', 'Nu 3.99')">Recycled Paper Notebook</h5>
+              <p class="card-text">A notebook made from 100% recycled paper, helping reduce waste.</p>
+              <p class="card-text"><strong>Nu 3.99</strong></p>
+              <button class="btn btn-success" onclick="addToCart('Recycled Paper Notebook')">Add to Cart</button>
+              <button class="view-btn" onclick="showLoginModal()">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        
+  </section>
+
+  <!-- Product Image Modal (Enlarged View) -->
+  <div class="modal fade product-details-modal" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="productDetailsModalLabel">Product Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="" alt="Product Image" id="productDetailsImage">
+          <h4 id="productDetailsName"></h4>
+          <p id="productDetailsDescription"></p>
+          <p><strong id="productDetailsPrice"></strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications for Cart -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div class="toast align-items-center text-bg-success" id="cartToast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">Item added to cart.</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-dark text-white text-center py-4">
+    <p>&copy; 2025 Eco-Friendly Finder. All rights reserved.</p>
+    <div class="d-flex justify-content-center align-items-center mt-2 gap-3">
+      <a href="https://www.facebook.com/tiger.tashi/" target="_blank" rel="noopener noreferrer">
+        <img src="facebook.png" alt="Facebook" class="social-icon">
+      </a>
+      <a href="https://x.com/DORJITA406" target="_blank" rel="noopener noreferrer">
+        <img src="twitter.png" alt="Twitter" class="social-icon">
+      </a>
+      <a href="#" target="_blank" rel="noopener noreferrer">
+        <img src="instagram.png" alt="Instagram" class="social-icon">
+      </a>
+    </div>
+  </footer>
+
+  <!-- Login/Signup Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Login or Sign Up</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Login/Signup form content will be injected here by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const productCards = document.querySelectorAll('.product-card');
+
+    function filterProducts() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const selectedCategory = categoryFilter.value;
+      let delay = 0;
+
+      productCards.forEach(card => {
+        const title = card.querySelector('.card-title').textContent.toLowerCase();
+        const category = card.getAttribute('data-category');
+
+        const matchesSearch = title.startsWith(searchTerm); // filter by first letter
+        const matchesCategory = selectedCategory === "" || category === selectedCategory;
+
+        card.classList.remove('visible');
+
+        if (matchesSearch && matchesCategory) {
+          setTimeout(() => {
+            card.classList.add('visible');
+          }, delay);
+          delay += 100;
+        } else {
+          card.classList.remove('visible');
+        }
+      });
+    }
+
+    searchInput.addEventListener('input', filterProducts);
+    categoryFilter.addEventListener('change', filterProducts);
+    filterProducts();
+
+    const cartKey = 'ecoCart';
+
+    function loadCartCount() {
+      const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+      document.getElementById('cart-count').textContent = cart.length;
+    }
+
+    function showToast(message) {
+      const toastElement = document.getElementById('cartToast');
+      const toast = new bootstrap.Toast(toastElement);
+      toast.show();
+    }
+
+    function addToCart(productName) {
+      const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+      if (!cart.includes(productName)) {
+        cart.push(productName);
+        localStorage.setItem(cartKey, JSON.stringify(cart));
+        loadCartCount();
+        showToast('Item added to cart.');
+      } else {
+        showToast('This item is already in your cart.');
+      }
+    }
+
+    function showProductDetails(productName, productImage, productDescription, productPrice) {
+      const enlargedImage = document.getElementById('productDetailsImage');
+      const productNameElement = document.getElementById('productDetailsName');
+      const productDescriptionElement = document.getElementById('productDetailsDescription');
+      const productPriceElement = document.getElementById('productDetailsPrice');
+
+      enlargedImage.src = productImage;
+      productNameElement.textContent = productName;
+      productDescriptionElement.textContent = productDescription;
+      productPriceElement.textContent = productPrice;
+
+      const productDetailsModal = new bootstrap.Modal(document.getElementById('productDetailsModal'));
+      productDetailsModal.show();
+    }
+
+function showLoginModal() {
+  const modalBody = document.querySelector('#loginModal .modal-body');
+  modalBody.innerHTML = 
+    `<h4>Login or Sign Up</h4>
+    <form id="loginForm">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username or Email</label>
+        <input type="text" class="form-control" id="username" required placeholder="example@gmail.com"/>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" required />
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+      <button type="button" class="btn btn-secondary mt-2" id="toggleSignup">Sign Up</button>
+    </form>`;
+
+  // Toggle between Login and Sign Up form
+  const toggleButton = document.getElementById('toggleSignup');
+  toggleButton.addEventListener('click', () => {
+    const form = document.getElementById('loginForm');
+    if (toggleButton.textContent === 'Sign Up') {
+      toggleButton.textContent = 'Login';
+      form.querySelector('button').textContent = 'Sign Up';
+
+      // Switch to Sign Up form with additional fields
+      form.innerHTML = `
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <input type="text" class="form-control" id="firstName" required placeholder="First Name"/>
+        </div>
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input type="text" class="form-control" id="lastName" required placeholder="Last Name"/>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" required placeholder="example@gmail.com"/>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" required />
+        </div>
+        <div class="mb-3">
+          <label for="repassword" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" id="repassword" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+        <button type="button" class="btn btn-secondary mt-2" id="toggleSignup">Login</button>
+      `;
+    } else {
+      toggleButton.textContent = 'Sign Up';
+      form.querySelector('button').textContent = 'Login';
+
+      // Switch back to Login form
+      form.innerHTML = `
+        <div class="mb-3">
+          <label for="username" class="form-label">Username or Email</label>
+          <input type="text" class="form-control" id="username" required placeholder="example@gmail.com"/>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="button" class="btn btn-secondary mt-2" id="toggleSignup">Sign Up</button>
+      `;
+    }
+  });
+
+  const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+  loginModal.show();
+}
+
+
+    loadCartCount();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

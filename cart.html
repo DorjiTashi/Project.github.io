@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Cart - Eco-Friendly Finder</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="styles.css" rel="stylesheet" />
+  <style>
+    /* Make sure the footer sticks to the bottom */
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      flex: 1;
+    }
+
+    footer {
+      margin-top: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark" style="background-color: #28a745;">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Eco-Friendly Finder</a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+          
+          <li class="nav-item"><a class="nav-link" href="cart.html">Cart</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="cart py-5 mt-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Your Cart</h2>
+
+      <div id="cart-items">
+        <!-- Cart items will be injected here by JS -->
+      </div>
+
+      <div id="empty-cart" class="text-center">
+        <p>Your cart is empty. Add some products to your cart!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal for Confirmation -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmModalLabel">Confirm Remove</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to remove this item from your cart?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" id="confirm-remove-button">Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-dark text-white text-center py-4">
+    <p>&copy; 2025 Eco-Friendly Finder. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const cartKey = 'ecoCart';
+    const cartItemsContainer = document.getElementById('cart-items');
+    const emptyCartMessage = document.getElementById('empty-cart');
+
+    let itemToRemove = null;
+
+    function loadCart() {
+      const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+      if (cart.length === 0) {
+        emptyCartMessage.style.display = 'block';
+        cartItemsContainer.style.display = 'none';
+        return;
+      }
+
+      emptyCartMessage.style.display = 'none';
+      cartItemsContainer.style.display = 'block';
+
+      // Clear previous cart items
+      cartItemsContainer.innerHTML = '';
+
+      cart.forEach(productName => {
+        const productDetails = getProductDetailsByName(productName);
+
+        const cartItemHTML = `
+          <div class="row mb-3" id="cart-item-${productName}">
+            <div class="col-md-4">
+              <img src="${productDetails.image}" alt="${productDetails.name}" class="img-fluid">
+            </div>
+            <div class="col-md-8">
+              <h5>${productDetails.name}</h5>
+              <p>${productDetails.description}</p>
+              <p><strong>${productDetails.price}</strong></p>
+              <button class="btn btn-danger" onclick="confirmRemove('${productName}')">Remove</button>
+              <button class="btn btn-primary" onclick="buyProduct('${productName}')">Buy</button>
+            </div>
+          </div>
+        `;
+
+        cartItemsContainer.innerHTML += cartItemHTML;
+      });
+    }
+
+    function getProductDetailsByName(productName) {
+      const products = {
+
+  "Eco-Friendly Shampoo Bar": {
+    name: "Eco-Friendly Shampoo Bar",
+    description: "A zero-waste shampoo bar that’s gentle on your hair and the environment.",
+    price: "Nu 8.99",
+    image: "shampoo.jpg"
+  },
+  "Reusable Shopping Bag": {
+    name: "Reusable Shopping Bag",
+    description: "A sturdy, foldable bag perfect for groceries or shopping trips.",
+    price: "Nu 12.99",
+    image: "rebag.png"
+  },
+  "Bamboo Toothbrush": {
+    name: "Bamboo Toothbrush",
+    description: "An eco-friendly alternative to plastic toothbrushes, made from sustainable bamboo.",
+    price: "Nu 4.99",
+    image: "bam.jpg"
+  },
+  "Reusable Water Bottle": {
+    name: "Reusable Water Bottle",
+    description: "Stay hydrated with this stainless steel reusable water bottle, perfect for reducing plastic waste.",
+    price: "Nu 12.99",
+    image: "water.png"
+  },
+  "Organic Cotton Tote Bag": {
+    name: "Organic Cotton Tote Bag",
+    description: "A stylish, durable tote bag made from organic cotton to reduce single-use plastic bags.",
+    price: "Nu 7.99",
+    image: "bag.jpg"
+  },
+  "Reusable Coffee Cup": {
+    name: "Reusable Coffee Cup",
+    description: "Take your coffee on the go with this reusable coffee cup, reducing waste from disposable cups.",
+    price: "Nu 10.99",
+    image: "coffee.jpg"
+  },
+  "Solar Powered Lantern": {
+    name: "Solar Powered Lantern",
+    description: "A solar-powered lantern, perfect for outdoor adventures without the need for disposable batteries.",
+    price: "Nu 18.99",
+    image: "solar.jpg"
+  },
+  "Compostable Trash Bags": {
+    name: "Compostable Trash Bags",
+    description: "These compostable trash bags break down quickly, helping reduce landfill waste.",
+    price: "Nu 11.99",
+    image: "trash.jpg"
+  },
+  "Recycled Paper Notebook": {
+    name: "Recycled Paper Notebook",
+    description: "A notebook made from 100% recycled paper, helping reduce waste.",
+    price: "Nu 3.99",
+    image: "note.jpg"
+  }
+};
+
+
+      return products[productName] || {};
+    }
+
+    function confirmRemove(productName) {
+      itemToRemove = productName;
+      const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+      modal.show();
+    }
+
+    document.getElementById('confirm-remove-button').addEventListener('click', () => {
+      removeFromCart(itemToRemove);
+      const modal = bootstrap.Modal.getInstance(document.getElementById('confirmModal'));
+      modal.hide();
+    });
+
+    function removeFromCart(productName) {
+      const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+      const updatedCart = cart.filter(item => item !== productName);
+      localStorage.setItem(cartKey, JSON.stringify(updatedCart));
+      loadCart();
+    }
+
+    function buyProduct(productName) {
+      // Redirect to the buy page (this can be changed to a more sophisticated checkout page if needed)
+      window.location.href = "buy.html";
+    }
+
+    // Run the loadCart function when the page loads
+    window.onload = loadCart;
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
